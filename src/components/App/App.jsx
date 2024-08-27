@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Description from "../Description/Description";
 import Feedback from "../Feedback/Feedback";
 import Options from "../Options/Options";
+import Notification from "../Notification/Notification";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   });
 
   const totalFeedback = feedBags.good + feedBags.neutral + feedBags.bad;
+  const positiveFeedback = Math.round((feedBags.good / totalFeedback) * 100);
 
   function updateFeedback(feedbackType) {
     setFeedBags({
@@ -51,9 +53,13 @@ function App() {
         reset={reset}
       />
       {totalFeedback > 0 ? (
-        <Feedback data={feedBags} />
+        <Feedback
+          data={feedBags}
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
       ) : (
-        <p>No feedback yet</p>
+        <Notification />
       )}
     </>
   );
